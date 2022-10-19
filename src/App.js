@@ -1,48 +1,45 @@
 // import logo from './logo.svg';
 import { useCallback, useEffect, useState } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [meme, setMemes]=useState()
+  const [memes, setMemes]=useState([]);
+
   const fetchMemes= useCallback(async()=>{
+    console.log("Do it again!")
     const data=await fetch("https://api.imgflip.com/get_memes")
     const data1=await data.json()
-    console.log(data1)
+
     setMemes(data1.data.memes)
   },[])
+
   useEffect(()=>{
     fetchMemes()
-    return 
-  },[fetchMemes])
+  },[])
 
-  function ListMemeImage(listMeme){
+  const ListMemeImage = (listMeme) => {
     return (
-    <div> 
+    <div className='ImageList row'> 
       {
-        listMeme.memes.map((item)=>{
+        listMeme.map((item)=>{
           return (
-          <div key={item.url}>
-            <img src={`${item.url}?w=256&h=256&fit=crop&auto=format`}
-              scrSet={`${item.url}?w=256&h=256&fit=crop&auto=format&dpr=2 2x`}
+          <div key={item.url} className="col-lg-4 col-md-6 col-sm-12 bg-yellow">
+            <img src={`${item.url}?w=164&h=164&fit=crop&auto=format`} 
               alt={item.title}
               loading="lazy"></img>
           </div>)})
       }
     </div>
-     
     )
   }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <button onClick={fetchMemes}>
+        <button className='btn btn-success m-2' onClick={fetchMemes}>
           Load memes
         </button>
-        {meme&ListMemeImage(meme.data)}
-      </header>
-      <body>
-      
-      </body>
+        {memes && ListMemeImage(memes)}
     </div>
   );
 }
