@@ -1,7 +1,6 @@
 // import logo from './logo.svg';
 import { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [memes, setMemes]=useState([]);
